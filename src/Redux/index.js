@@ -3,7 +3,11 @@ export const Connect = connect;
 const initialState = {
     User: '',
     Books:[],
-    Recent:[]
+    Recent:{
+        activities:[],
+        books:[],
+        users:[]
+    }
 }
 export const reducer = (state = initialState, action) => {
     const { field, val, type } = action;

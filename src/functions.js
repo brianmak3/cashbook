@@ -40,10 +40,18 @@ const uri = 'http://192.168.100.5:3000/',
             dateStr = date.toString().substr(0, 15);
         return {
             date: moment(ms).format('MMM D, YYYY'),
+            monthDate: moment(ms).format('MMM D'),
             time:  moment(ms).format('HH:mm') ,
+            month:  moment(ms).format('MMM') ,
+            year:  moment(ms).format('YYYY') ,
             dateStr: dateStr.substr(0, 10) + ' ' + dateStr.substr(13, 2),
             ms: date.getTime()
         }
+    },
+    getEntryDate = (date)=>{
+        return getDateTime(Date.now()).date === getDateTime(date).date ? getDateTime(date).time : 
+        getDateTime(Date.now()).year === getDateTime(date).year? getDateTime(date).monthDate:
+        getDateTime(date).date
     },
     getIndex = (array, field, value) => {
         return array.findIndex(item => item[field] === value);
@@ -56,15 +64,7 @@ const uri = 'http://192.168.100.5:3000/',
     },
     numberWithCommas = (number) =>{
         return isNaN(number)?0: number.toString().length < 10?  number.toLocaleString(): number.toExponential(2);
-    },
-    toPlainString = (num) => {
-        return (''+ +num).replace(/(-?)(\d*)\.?(\d+)e([+-]\d+)/,
-          function(a,b,c,d,e) {
-            return e < 0
-              ? b + '0.' + Array(1-e-c.length).join(0) + c + d
-              : b + c + d + Array(e-d.length+1).join(0);
-          });
-      }
+    } 
 export {
     Api,
     validateFields,
@@ -74,5 +74,6 @@ export {
     networkError,
     returnDate,
     numberWithCommas,
-    formatDate
+    formatDate,
+    getEntryDate
 }
